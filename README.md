@@ -1,19 +1,40 @@
 # API
+
+## Prerequisites
+
+- Node.js (min v12.x)
+- Database (PostgreSQL only)
+
 ## Installation
 ```bash
 npm install
 ```
 
-Rename ".env.example" to ".env"
+Rename ".env.example" to ".env" and configure it.
 
-Edit env. variables inside.
+## Some things to known
 
-## Usage
+API will retrieve the identifiers for the database in the ".env" file.
 
-```bash
-npm run webpack
+**🔴 WARNING! sequelize-cli** does not use the ".env" file but sequelize.config.json located here: [/src/Database/Configs/sequelize.config.json](/src/Database/Configs/sequelize.config.json)
+
+If sequelize.config.json doesn't exist, run:
+```sh
+npx sequelize init
 ```
-In second window:
-```bash
+
+## Development
+
+Open your favorite Terminal and run these commands.
+
+First tab:
+```sh
+npm run webpack
+``` 
+Second tab:
+```sh
 npm start
 ```
+
+## Building for production
+Coming soon...
