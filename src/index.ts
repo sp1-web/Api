@@ -1,10 +1,11 @@
 import cors from "cors";
 import * as dotenv from "dotenv";
 dotenv.config();
-import express from "express";
+import express, {NextFunction, Request, Response} from "express";
 import {IWebpackHotModule} from "./Interfaces/IWebpackHotModule";
 import {Manager} from "./Controllers/Manager";
 import {database} from "./Database/Models";
+import {HttpResponse} from "./Utils/HttpResponse";
 
 
 // Variables
@@ -16,6 +17,12 @@ app.use(cors());
 app.use(express.json());
 
 new Manager(app);
+
+// Error handler
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+    console.error(err.stack);
+    return HttpResponse.error(res);
+})
 
 database.sync()
     .then(() => {

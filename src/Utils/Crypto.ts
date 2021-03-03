@@ -3,11 +3,11 @@ import { v4 as uuidv4 } from 'uuid';
 
 export class Crypto {
 
-    static PasswordHash(pwd: string): string {
+    static hashPassword(pwd: string): string {
         return crypto.createHash('sha256').update(pwd).digest('hex');
     }
 
-    static GenerateToken(): string {
+    static generateToken(): string {
         return uuidv4();
     }
 }

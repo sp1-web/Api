@@ -106,3 +106,7 @@ dist
 dist/
 
 *.config.json
+
+package-lock.json
+
+src/Database/Models/index.js

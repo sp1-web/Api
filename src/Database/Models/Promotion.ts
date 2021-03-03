@@ -29,6 +29,4 @@ export class Promotion extends UUID {
     @Column(DataType.DOUBLE)
     percentageReduction: number;
 
-    @HasMany(() => Promotion)
-    promotions: Promotion[];
 }
