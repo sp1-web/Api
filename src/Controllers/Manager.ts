@@ -1,5 +1,6 @@
 import {Express} from "express";
 import {ExampleController} from "./ExampleController";
+import {AuthController} from "./AuthController";
 
 export class Manager {
 
@@ -8,7 +9,11 @@ export class Manager {
      * @param app
      */
     constructor(app: Express) {
-        new ExampleController().routes(app);
+        /**
+         * Il serait interessant de faire un autoloader
+         */
+        new ExampleController(app);
+        new AuthController(app);
     }
 
 }

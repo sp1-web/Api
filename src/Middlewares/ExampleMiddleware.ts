@@ -6,12 +6,11 @@ export class ExampleMiddleware {
 
     /**
      * Middleware example
-     * @param req
-     * @param res
-     * @param next
-     * @constructor
+     * @param req Request
+     * @param res Response
+     * @param next NextFunc
      */
-    public static HelloWorld(req: IHttpRequest, res: Response, next: NextFunction) {
+    public static ProtectionAbcd(req: IHttpRequest, res: Response, next: NextFunction) {
         if (req.headers.authorization === "abcd") {
             return next(); // Succès, on passe la méthode
         }

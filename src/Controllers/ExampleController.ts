@@ -1,15 +1,13 @@
-import {IController} from "../Interfaces/IController";
 import {Express, Response} from "express";
 import {IHttpRequest} from "../Interfaces/IHttpRequest";
 import {HttpResponse} from "../Utils/HttpResponse";
 import {ExampleMiddleware} from "../Middlewares/ExampleMiddleware";
 
-export class ExampleController implements IController {
-    routePrefix: string;
+export class ExampleController {
 
-    routes(app: Express) {
+    constructor(app: Express) {
         app.get('/', this.Index);
-        app.get('/protected/route', ExampleMiddleware.HelloWorld, this.ProtectedRoute);
+        app.get('/protected/route', ExampleMiddleware.ProtectionAbcd, this.ProtectedRoute);
     }
 
     /**
@@ -17,7 +15,6 @@ export class ExampleController implements IController {
      * Default route example
      * @param req
      * @param res
-     * @constructor
      * @protected
      */
     protected Index(req: IHttpRequest, res: Response) {
@@ -29,7 +26,6 @@ export class ExampleController implements IController {
      * Default protected (by middleware) route example
      * @param req
      * @param res
-     * @constructor
      * @protected
      */
     protected ProtectedRoute(req: IHttpRequest, res: Response) {
