@@ -105,6 +105,8 @@ dist
 
 dist/
 
+.idea
+
 *.config.json
 
 package-lock.json
