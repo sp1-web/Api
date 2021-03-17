@@ -1,5 +1,4 @@
 import {Express} from "express";
-import {ExampleController} from "./ExampleController";
 import {AuthController} from "./AuthController";
 
 export class Manager {
@@ -12,7 +11,6 @@ export class Manager {
         /**
          * Il serait interessant de faire un autoloader
          */
-        new ExampleController(app);
         new AuthController(app);
     }
 
