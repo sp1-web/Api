@@ -6,6 +6,8 @@ import {IWebpackHotModule} from "./Interfaces/IWebpackHotModule";
 import {Manager} from "./Controllers/Manager";
 import {database} from "./Database/Models";
 import {HttpResponse} from "./Utils/HttpResponse";
+import swaggerUi from "swagger-ui-express";
+import * as swaggerDocument from "../swagger.json";
 
 
 // Variables
@@ -17,6 +19,7 @@ app.use(cors());
 app.use(express.json());
 
 new Manager(app);
+app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Error handler
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {

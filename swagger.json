@@ -1,0 +1,53 @@
+{
+  "info": {
+    "version": "1.0.0",
+    "title": "MSPR-API",
+    "description": "API du projet MSPR",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "swagger": "2.0",
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Connect, register or disconnect to application"
+    }
+  ],
+  "definitions": {
+    "ApiResponse": {
+      "properties": {
+        "success": { "type": "boolean" },
+        "code": { "type": "integer" },
+        "message": { "type": "string" },
+        "data": { "type": "object" }
+      },
+      "type": "object"
+    }
+  },
+  "paths": {
+    "/login": {
+      "post": {
+        "summary": "Connect to application",
+        "tags": ["Auth"],
+        "description": "",
+        "parameters": [
+          { "name": "email", "in": "body", "type": "string" },
+          { "name": "password", "in": "body", "type": "string" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully connected",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
+            }
+          },
+          "404": {
+            "description": "Invalid credentials"
+          }
+        }
+      }
+    }
+  }
+}
