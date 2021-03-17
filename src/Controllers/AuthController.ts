@@ -2,6 +2,7 @@ import {Express, Request, Response} from "express";
 import {HttpResponse} from "../Utils/HttpResponse";
 import {User} from "../Database/Models/User";
 import {Crypto} from "../Utils/Crypto";
+import {JWT} from "../Utils/JWT";
 
 export class AuthController {
 
@@ -30,11 +31,8 @@ export class AuthController {
         })
             .then(user => {
                 if (user !== null) {
-                    user.token = Crypto.generateToken();
-                    return user.save()
-                        .then(saved => {
-                            return HttpResponse.success(res, saved.toJSON(), 'Vous êtes maintenant connecté');
-                        })
+                    const jwt = JWT.encode(user);
+                    return HttpResponse.success(res, { jwt }, 'Vous êtes maintenant connecté');
                 }
                 return HttpResponse.error(res, 'Adresse e-mail ou mot de passe invalide', 404);
             })
