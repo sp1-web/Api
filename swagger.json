@@ -24,6 +24,62 @@
         "data": { "type": "object" }
       },
       "type": "object"
+    },
+    "Article": {
+      "properties": {
+        "id": { "type": "uuid" },
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "img": { "type": "string" },
+        "price": { "type": "double" },
+        "createdAt": { "type": "datetime" },
+        "updatedAt": { "type": "datetime" }
+      },
+      "type": "object"
+    },
+    "Promotion": {
+      "properties": {
+        "id": { "type": "uuid" },
+        "qrcode_id": { "type": "uuid" },
+        "article_id": { "type": "uuid" },
+        "name": { "type": "string" },
+        "code": { "type": "string" },
+        "percentageReduction": { "type": "double" },
+        "createdAt": { "type": "datetime" },
+        "updatedAt": { "type": "datetime" }
+      },
+      "type": "object"
+    },
+    "QrCode": {
+      "properties": {
+        "id": { "type": "uuid" },
+        "name": { "type": "string" },
+        "token": { "type": "string" },
+        "createdAt": { "type": "datetime" },
+        "updatedAt": { "type": "datetime" }
+      },
+      "type": "object"
+    },
+    "User": {
+      "properties": {
+        "id": { "type": "uuid" },
+        "firstname": { "type": "string" },
+        "email": { "type": "string" },
+        "password": { "type": "string" },
+        "createdAt": { "type": "datetime" },
+        "updatedAt": { "type": "datetime" }
+      },
+      "type": "object"
+    },
+    "UserPromotion": {
+      "properties": {
+        "id": { "type": "uuid" },
+        "user_id": { "type": "uuid" },
+        "promotion_id": { "type": "uuid" },
+        "createdAt": { "type": "datetime" },
+        "updatedAt": { "type": "datetime" }
+      },
+      "type": "object"
     }
   },
   "paths": {
@@ -45,6 +101,30 @@
           },
           "404": {
             "description": "Invalid credentials"
+          }
+        }
+      }
+    },
+    "/register": {
+      "post": {
+        "summary": "Register to application",
+        "tags": ["Auth"],
+        "description": "",
+        "parameters": [
+          { "name": "firstname", "in": "body", "type": "string" },
+          { "name": "email", "in": "body", "type": "string" },
+          { "name": "password", "in": "body", "type": "string" },
+          { "name": "passwordConfirm", "in": "body", "type": "string" }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successfully registered",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
+            }
+          },
+          "400": {
+            "description": "Account not registered"
           }
         }
       }
