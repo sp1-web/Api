@@ -13,6 +13,10 @@
     {
       "name": "Auth",
       "description": "Connect, register or disconnect to application"
+    },
+    {
+      "name": "QrCode",
+      "description": "Operations about qrcode"
     }
   ],
   "definitions": {
@@ -27,57 +31,57 @@
     },
     "Article": {
       "properties": {
-        "id": { "type": "uuid" },
+        "id": { "type": "string", "format": "uuid" },
         "name": { "type": "string" },
         "description": { "type": "string" },
         "img": { "type": "string" },
         "price": { "type": "double" },
-        "createdAt": { "type": "datetime" },
-        "updatedAt": { "type": "datetime" }
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
       },
       "type": "object"
     },
     "Promotion": {
       "properties": {
-        "id": { "type": "uuid" },
-        "qrcode_id": { "type": "uuid" },
-        "article_id": { "type": "uuid" },
+        "id": { "type": "string", "format": "uuid" },
+        "qrcode_id": { "type": "string", "format": "uuid" },
+        "article_id": { "type": "string", "format": "uuid" },
         "name": { "type": "string" },
         "code": { "type": "string" },
         "percentageReduction": { "type": "double" },
-        "createdAt": { "type": "datetime" },
-        "updatedAt": { "type": "datetime" }
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
       },
       "type": "object"
     },
     "QrCode": {
       "properties": {
-        "id": { "type": "uuid" },
+        "id": { "type": "string", "format": "uuid" },
         "name": { "type": "string" },
         "token": { "type": "string" },
-        "createdAt": { "type": "datetime" },
-        "updatedAt": { "type": "datetime" }
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
       },
       "type": "object"
     },
     "User": {
       "properties": {
-        "id": { "type": "uuid" },
+        "id": { "type": "string", "format": "uuid" },
         "firstname": { "type": "string" },
         "email": { "type": "string" },
         "password": { "type": "string" },
-        "createdAt": { "type": "datetime" },
-        "updatedAt": { "type": "datetime" }
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
       },
       "type": "object"
     },
     "UserPromotion": {
       "properties": {
-        "id": { "type": "uuid" },
-        "user_id": { "type": "uuid" },
-        "promotion_id": { "type": "uuid" },
-        "createdAt": { "type": "datetime" },
-        "updatedAt": { "type": "datetime" }
+        "id": { "type": "string", "format": "uuid" },
+        "user_id": { "type": "string", "format": "uuid" },
+        "promotion_id": { "type": "string", "format": "uuid" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
       },
       "type": "object"
     }
@@ -125,6 +129,30 @@
           },
           "400": {
             "description": "Account not registered"
+          }
+        }
+      }
+    },
+    "/qrcodes/scan": {
+      "post": {
+        "summary": "Verify token of qrcode and return his information",
+        "tags": ["QrCode"],
+        "description": "",
+        "parameters": [
+          { "name": "token", "in": "body", "type": "string" }
+        ],
+        "responses": {
+          "200": {
+            "description": "QrCode found",
+            "schema": {
+              "$ref": "#/definitions/QrCode"
+            }
+          },
+          "404": {
+            "description": "QrCode not found"
+          },
+          "400": {
+            "description": "Invalid request. Token not found inside body?"
           }
         }
       }
