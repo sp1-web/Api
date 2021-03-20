@@ -5,12 +5,12 @@ import {DecodeResult, ExpirationStatus} from "../Interfaces/JWT";
 
 export class AuthMiddleware {
 
-    private static REQUEST_HEADER_JWT = 'X-JWT';
+    public static REQUEST_HEADER_JWT = 'x-jwt';
     private static RESPONSE_HEADER_JWT_RENEWAL = 'X-JWT-Renewal';
 
     public static IsLogged(req: Request, res: Response, next: NextFunction) {
         const unauthorized = (message) => HttpResponse.error(res, message, 401);
-        const header = req.headers[this.REQUEST_HEADER_JWT];
+        const header = req.headers[AuthMiddleware.REQUEST_HEADER_JWT];
         if (!header)
             return unauthorized(`Invalid token authorization`);
         const decoded: DecodeResult = JWT.decode(header);
@@ -27,7 +27,7 @@ export class AuthMiddleware {
                 expires,
                 issued
             }
-            res.setHeader(this.RESPONSE_HEADER_JWT_RENEWAL, token);
+            res.setHeader(AuthMiddleware.RESPONSE_HEADER_JWT_RENEWAL, token);
         }
         res.locals = {
             ...res.locals,

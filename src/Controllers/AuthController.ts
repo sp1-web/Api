@@ -31,7 +31,7 @@ export class AuthController {
         })
             .then(user => {
                 if (user !== null) {
-                    const jwt = JWT.encode(user);
+                    const jwt = JWT.encode(user.toJSON());
                     return HttpResponse.success(res, { jwt }, 'Vous êtes maintenant connecté');
                 }
                 return HttpResponse.error(res, 'Adresse e-mail ou mot de passe invalide', 404);
@@ -49,10 +49,10 @@ export class AuthController {
         const body = req.body;
         const neededParams = ['firstname', 'email', 'password', 'passwordConfirm'];
         if (!neededParams.every(itm => body.hasOwnProperty(itm))) {
-            return HttpResponse.error(res, 'Veuillez remplir tous champs');
+            return HttpResponse.error(res, 'Veuillez remplir tous champs', 400);
         }
         if (body.password !== body.passwordConfirm) {
-            return HttpResponse.error(res, 'Les mots de passes sont différents');
+            return HttpResponse.error(res, 'Les mots de passes sont différents', 400);
         }
         const passwordHash = Crypto.hashPassword(body.password);
         return User.findOrCreate({ where: { email: body.email }, defaults: { firstname: body.firstname, password: passwordHash } })
@@ -60,7 +60,7 @@ export class AuthController {
                 if (user[1]) {
                     return HttpResponse.success(res, null, 'Votre compte a été créé avec succès', 201);
                 }
-                return HttpResponse.error(res, 'Cette adresse e-mail est déjà utilisée');
+                return HttpResponse.error(res, 'Cette adresse e-mail est déjà utilisée', 400);
             })
     }
 
