@@ -31,7 +31,7 @@ export class AuthController {
         })
             .then(user => {
                 if (user !== null) {
-                    const jwt = JWT.encode(user);
+                    const jwt = JWT.encode(user.toJSON());
                     return HttpResponse.success(res, { jwt }, 'Vous êtes maintenant connecté');
                 }
                 return HttpResponse.error(res, 'Adresse e-mail ou mot de passe invalide', 404);
