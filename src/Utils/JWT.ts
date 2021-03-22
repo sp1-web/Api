@@ -3,7 +3,7 @@ import {DecodeResult, EncodeResult, ExpirationStatus} from "../Interfaces/JWT";
 
 export class JWT {
 
-    private static secretKey = "";
+    private static secretKey = process.env.JWT_SECRET;
     private static algo: TAlgorithm = "HS512";
 
     /**

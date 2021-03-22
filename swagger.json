@@ -1,0 +1,161 @@
+{
+  "info": {
+    "version": "1.0.0",
+    "title": "MSPR-API",
+    "description": "API du projet MSPR",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "swagger": "2.0",
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Connect, register or disconnect to application"
+    },
+    {
+      "name": "QrCode",
+      "description": "Operations about qrcode"
+    }
+  ],
+  "definitions": {
+    "ApiResponse": {
+      "properties": {
+        "success": { "type": "boolean" },
+        "code": { "type": "integer" },
+        "message": { "type": "string" },
+        "data": { "type": "object" }
+      },
+      "type": "object"
+    },
+    "Article": {
+      "properties": {
+        "id": { "type": "string", "format": "uuid" },
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "img": { "type": "string" },
+        "price": { "type": "double" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "type": "object"
+    },
+    "Promotion": {
+      "properties": {
+        "id": { "type": "string", "format": "uuid" },
+        "qrcode_id": { "type": "string", "format": "uuid" },
+        "article_id": { "type": "string", "format": "uuid" },
+        "name": { "type": "string" },
+        "code": { "type": "string" },
+        "percentageReduction": { "type": "double" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "type": "object"
+    },
+    "QrCode": {
+      "properties": {
+        "id": { "type": "string", "format": "uuid" },
+        "name": { "type": "string" },
+        "token": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "type": "object"
+    },
+    "User": {
+      "properties": {
+        "id": { "type": "string", "format": "uuid" },
+        "firstname": { "type": "string" },
+        "email": { "type": "string" },
+        "password": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "type": "object"
+    },
+    "UserPromotion": {
+      "properties": {
+        "id": { "type": "string", "format": "uuid" },
+        "user_id": { "type": "string", "format": "uuid" },
+        "promotion_id": { "type": "string", "format": "uuid" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "type": "object"
+    }
+  },
+  "paths": {
+    "/login": {
+      "post": {
+        "summary": "Connect to application",
+        "tags": ["Auth"],
+        "description": "",
+        "parameters": [
+          { "name": "email", "in": "body", "type": "string" },
+          { "name": "password", "in": "body", "type": "string" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully connected",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
+            }
+          },
+          "404": {
+            "description": "Invalid credentials"
+          }
+        }
+      }
+    },
+    "/register": {
+      "post": {
+        "summary": "Register to application",
+        "tags": ["Auth"],
+        "description": "",
+        "parameters": [
+          { "name": "firstname", "in": "body", "type": "string" },
+          { "name": "email", "in": "body", "type": "string" },
+          { "name": "password", "in": "body", "type": "string" },
+          { "name": "passwordConfirm", "in": "body", "type": "string" }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successfully registered",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
+            }
+          },
+          "400": {
+            "description": "Account not registered"
+          }
+        }
+      }
+    },
+    "/qrcodes/scan": {
+      "post": {
+        "summary": "Verify token of qrcode and return his information",
+        "tags": ["QrCode"],
+        "description": "",
+        "parameters": [
+          { "name": "token", "in": "body", "type": "string" }
+        ],
+        "responses": {
+          "200": {
+            "description": "QrCode found",
+            "schema": {
+              "$ref": "#/definitions/QrCode"
+            }
+          },
+          "404": {
+            "description": "QrCode not found"
+          },
+          "400": {
+            "description": "Invalid request. Token not found inside body?"
+          }
+        }
+      }
+    }
+  }
+}
