@@ -23,6 +23,23 @@ If sequelize.config.json doesn't exist, run:
 npx sequelize init
 ```
 
+## Initialize database
+
+Drop your database if exist:
+```sh
+npx sequelize db:drop
+```
+
+Create your database:
+```sh
+npx sequelize db:create
+```
+
+Migrate all:
+```sh
+npx sequelize db:migrate
+```
+
 ## Development
 
 Open your favorite Terminal and run these commands.
