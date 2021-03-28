@@ -49,9 +49,9 @@ export class JWT {
     static checkExpiration(token: any): ExpirationStatus {
         const now = Date.now();
         if (token.expires > now) return "active";
-        const threeHours = 3 * 60 * 60 * 1000;
-        const threeHoursAfterExpiration = token.expires + threeHours;
-        if (threeHoursAfterExpiration > now) return "grace";
+        const minutes = 30 * 60 * 1000; // 30 minutes
+        const minutesAfterExpiration = token.expires + minutes;
+        if (minutesAfterExpiration > now) return "grace";
         return "expired";
     }
 

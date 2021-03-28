@@ -29,4 +29,10 @@ export class Promotion extends UUID {
     @Column(DataType.DOUBLE)
     percentageReduction: number;
 
+    @Column({ type: DataType.BOOLEAN, defaultValue: false })
+    generic: boolean;
+
+    @Column
+    expireAt: Date;
+
 }

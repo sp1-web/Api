@@ -15,10 +15,6 @@ export class PromotionsController {
     /**
      * GET /promotions
      * Récupère toutes les promotions existantes
-     * @param req
-     * @param res
-     * @constructor
-     * @private
      */
     private GetAll(req: Request, res: Response) {
         return Promotion.findAll({ attributes: { exclude: ['createdAt', 'updatedAt'] } })
@@ -30,9 +26,6 @@ export class PromotionsController {
     /**
      * GET /promotions/{id}
      * Récupère une promotion par son id
-     * @param req
-     * @param res
-     * @private
      */
     private GetOne(req: Request, res: Response) {
         const id = req.params.id;

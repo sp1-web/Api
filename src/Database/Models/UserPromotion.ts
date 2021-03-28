@@ -19,4 +19,7 @@ export class UserPromotion extends UUID {
 
     @BelongsTo(() => Promotion)
     promotion: Promotion;
+
+    @Column({ type: DataType.BOOLEAN, defaultValue: false })
+    used: boolean;
 }

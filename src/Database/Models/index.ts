@@ -3,6 +3,7 @@ import {Article} from "./Article";
 import {Promotion} from "./Promotion";
 import {QrCode} from "./QrCode";
 import {User} from "./User";
+import {UserPromotion} from "./UserPromotion";
 
 const config: any = {
     host: process.env.DB_HOST,
@@ -16,7 +17,8 @@ const config: any = {
         Article,
         Promotion,
         QrCode,
-        User
+        User,
+        UserPromotion
     ]
 };
 
