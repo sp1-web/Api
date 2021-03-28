@@ -17,6 +17,10 @@
     {
       "name": "QrCode",
       "description": "Operations about qrcode"
+    },
+    {
+      "name": "Promotions",
+      "description": "Operations about promotions"
     }
   ],
   "definitions": {
@@ -153,6 +157,39 @@
           },
           "400": {
             "description": "Invalid request. Token not found inside body?"
+          }
+        }
+      }
+    },
+    "/promotions": {
+      "get": {
+        "summary": "Get all promotions",
+        "tags": ["Promotions"],
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Promotions found",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
+            }
+          }
+        }
+      }
+    },
+    "/promotions/{id}": {
+      "get": {
+        "summary": "Get one promotion",
+        "tags": ["Promotions"],
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Promotion found",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
+            }
+          },
+          "400": {
+            "description": "Invalid request. Promotion id is not valid?"
           }
         }
       }
