@@ -18,7 +18,12 @@ export class ConnectedUserController {
         return UserPromotion.findAll({
             where: { user_id: res.locals.connected.id },
             attributes: { exclude: ['createdAt', 'updatedAt', 'user_id', 'promotion_id'] },
-            include: [Promotion]
+            include: [
+                {
+                    model: Promotion,
+                    attributes: { exclude: ['createdAt', 'updatedAt', 'qrcode_id'] }
+                }
+            ]
         })
             .then(userPromotions => {
                 if (userPromotions) {
