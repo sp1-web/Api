@@ -28,25 +28,20 @@ export class QrcodesController {
                 if (qrcode) {
                     if (qrcode.promotions.length > 0 ) {
                         let userPromotionsToCreate = [];
-                        let promotion_ids = [];
                         qrcode.promotions.map(x => {
                             if (!x.generic) {
                                 userPromotionsToCreate.push({ user_id: res.locals.connected.id, promotion_id: x.id, used: false });
                             }
                         });
-                        promotion_ids = userPromotionsToCreate.map(x => x.promotion_id); // Liste des ids des promotions à ajouter
+                        let promotion_ids = userPromotionsToCreate.map(x => x.promotion_id); // Liste des ids des promotions à ajouter
                         return UserPromotion.findAll({ where: { promotion_id: promotion_ids, user_id: res.locals.connected.id } })
                             .then(userPromotions => { // On récupère les promotions qui existent déjà dans la relation UserPromotion
                                 let userPromotionsAlreadyCreated = userPromotions.map(x => x.promotion_id);
                                 return UserPromotion.bulkCreate(userPromotionsToCreate.filter(x => !userPromotionsAlreadyCreated.includes(x.promotion_id)))
                                     .then(createdPromotions => {
                                         return HttpResponse.success(res, qrcode);
-                                    })
-                            })
-                        /*return UserPromotion.(userPromotions)
-                            .then(userPromotionsCreated => {
-                                return HttpResponse.success(res, qrcode);
-                            })*/
+                                    });
+                            });
                     }
                     return HttpResponse.success(res, qrcode);
                 }
