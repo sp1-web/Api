@@ -3,7 +3,7 @@ import {BelongsTo, Column, DataType, ForeignKey, Table} from "sequelize-typescri
 import {User} from "./User";
 import {Promotion} from "./Promotion";
 
-@Table
+@Table({ tableName: "User_Promotions" })
 export class UserPromotion extends UUID {
 
     @ForeignKey(() => User)
