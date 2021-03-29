@@ -10,7 +10,7 @@ export class Article extends UUID {
     @Column
     description: string;
 
-    @Column(DataType.STRING(255))
+    @Column(DataType.TEXT)
     img: string;
 
     @Column(DataType.DOUBLE)
