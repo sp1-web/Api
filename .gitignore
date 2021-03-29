@@ -112,3 +112,5 @@ dist/
 package-lock.json
 
 src/Database/Models/index.js
+
+.test.env

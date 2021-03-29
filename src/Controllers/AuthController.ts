@@ -19,7 +19,7 @@ export class AuthController {
         const body = req.body;
         const neededParams = ['email', 'password'];
         if (!neededParams.every(itm => body.hasOwnProperty(itm))) {
-            return HttpResponse.error(res, 'Adresse e-mail ou mot de passe invalide', 404);
+            return HttpResponse.error(res, 'Adresse e-mail ou mot de passe invalide', 400);
         }
         const passwordHash = Crypto.hashPassword(body.password);
         return User.findOne({

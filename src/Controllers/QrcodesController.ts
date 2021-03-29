@@ -22,7 +22,11 @@ export class QrcodesController {
         return Qrcode.findOne({
             where: { token: body.token },
             attributes: { exclude: ['createdAt', 'updatedAt'] },
-            include: ['promotions']
+            include: [
+                {
+                    association: 'promotions',
+                    attributes: { exclude: ['createdAt', 'updatedAt', 'qrcode_id'] }
+                }]
         })
             .then(qrcode => {
                 if (qrcode) {
@@ -34,7 +38,7 @@ export class QrcodesController {
                             }
                         });
                         let promotion_ids = userPromotionsToCreate.map(x => x.promotion_id); // Liste des ids des promotions à ajouter
-                        return UserPromotion.findAll({ where: { promotion_id: promotion_ids, user_id: res.locals.connected.id } })
+                        return UserPromotion.findAll({ where: { promotion_id: promotion_ids, user_id: res.locals.connected.id }, paranoid: false })
                             .then(userPromotions => { // On récupère les promotions qui existent déjà dans la relation UserPromotion
                                 const userPromotionsAlreadyCreated = userPromotions.map(x => x.promotion_id);
                                 const userPromotionsNeedToCreate = userPromotionsToCreate.filter(x => !userPromotionsAlreadyCreated.includes(x.promotion_id));
