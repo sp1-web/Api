@@ -1,10 +1,10 @@
 import {Express, Request, Response} from "express";
 import {HttpResponse} from "../Utils/HttpResponse";
-import {QrCode} from "../Database/Models/QrCode";
+import {Qrcode} from "../Database/Models/Qrcode";
 import {AuthMiddleware} from "../Middlewares/AuthMiddleware";
 import {UserPromotion} from "../Database/Models/UserPromotion";
 
-export class QrCodesController {
+export class QrcodesController {
 
     constructor(app: Express) {
         app.post('/qrcodes/scan', AuthMiddleware.IsLogged, this.Scan);
@@ -19,7 +19,7 @@ export class QrCodesController {
         const params = ['token'];
         if (!params.every(x => body.hasOwnProperty(x) && x !== null))
             return HttpResponse.error(res, 'Il manque des paramètres', 400);
-        return QrCode.findOne({
+        return Qrcode.findOne({
             where: { token: body.token },
             attributes: { exclude: ['createdAt', 'updatedAt'] },
             include: ['promotions']

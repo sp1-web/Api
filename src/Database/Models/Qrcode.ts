@@ -2,8 +2,8 @@ import {Column, HasMany, Table} from "sequelize-typescript";
 import {UUID} from "./Generic/UUID";
 import {Promotion} from "./Promotion";
 
-@Table({ tableName: "Qrcodes" })
-export class QrCode extends UUID {
+@Table
+export class Qrcode extends UUID {
 
     @Column
     name: string;
