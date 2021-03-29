@@ -1,8 +1,9 @@
 import {Sequelize} from "sequelize-typescript";
 import {Article} from "./Article";
 import {Promotion} from "./Promotion";
-import {QrCode} from "./QrCode";
+import {Qrcode} from "./Qrcode";
 import {User} from "./User";
+import {UserPromotion} from "./UserPromotion";
 
 const config: any = {
     host: process.env.DB_HOST,
@@ -15,8 +16,9 @@ const config: any = {
     models: [
         Article,
         Promotion,
-        QrCode,
-        User
+        Qrcode,
+        User,
+        UserPromotion
     ]
 };
 

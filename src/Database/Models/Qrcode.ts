@@ -3,7 +3,7 @@ import {UUID} from "./Generic/UUID";
 import {Promotion} from "./Promotion";
 
 @Table
-export class QrCode extends UUID {
+export class Qrcode extends UUID {
 
     @Column
     name: string;

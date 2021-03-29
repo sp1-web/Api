@@ -1,7 +1,8 @@
 import {Express} from "express";
 import {AuthController} from "./AuthController";
 import {PromotionsController} from "./PromotionsController";
-import {QrCodesController} from "./QrCodesController";
+import {QrcodesController} from "./QrcodesController";
+import {ConnectedUserController} from "./ConnectedUserController";
 
 export class Manager {
 
@@ -15,7 +16,8 @@ export class Manager {
          */
         new AuthController(app);
         new PromotionsController(app);
-        new QrCodesController(app);
+        new QrcodesController(app);
+        new ConnectedUserController(app);
     }
 
 }

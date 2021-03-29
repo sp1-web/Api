@@ -13,10 +13,7 @@ export class AuthController {
 
     /**
      * POST /login
-     * Attempt to login with email/password
-     * @param req
-     * @param res
-     * @private
+     * Connexion à l'aide d'une adresse e-mail et mot de passe
      */
     private login(req: Request, res: Response) {
         const body = req.body;
@@ -40,10 +37,7 @@ export class AuthController {
 
     /**
      * POST /register
-     * Create an account
-     * @param req
-     * @param res
-     * @private
+     * Création d'un compte
      */
     private register(req: Request, res: Response) {
         const body = req.body;

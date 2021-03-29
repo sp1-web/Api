@@ -1,17 +1,17 @@
 import {BelongsTo, BelongsToMany, Column, DataType, ForeignKey, HasMany, Table} from "sequelize-typescript";
 import {UUID} from "./Generic/UUID";
-import {QrCode} from "./QrCode";
+import {Qrcode} from "./Qrcode";
 import {Article} from "./Article";
 
 @Table
 export class Promotion extends UUID {
 
-    @ForeignKey(() => QrCode)
+    @ForeignKey(() => Qrcode)
     @Column(DataType.UUIDV4)
     qrcode_id: string;
 
-    @BelongsTo(() => QrCode)
-    qrcode: QrCode;
+    @BelongsTo(() => Qrcode)
+    qrcode: Qrcode;
 
     @ForeignKey(() => Article)
     @Column(DataType.UUIDV4)
@@ -28,5 +28,11 @@ export class Promotion extends UUID {
 
     @Column(DataType.DOUBLE)
     percentageReduction: number;
+
+    @Column({ type: DataType.BOOLEAN, defaultValue: false })
+    generic: boolean;
+
+    @Column
+    expireAt: Date;
 
 }
