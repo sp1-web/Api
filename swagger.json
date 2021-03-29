@@ -21,8 +21,20 @@
     {
       "name": "Promotions",
       "description": "Operations about promotions"
+    },
+    {
+      "name": "Connected user",
+      "description": "Operations about connected user"
     }
   ],
+  "securityDefinitions": {
+    "JWT": {
+      "type": "apiKey",
+      "name": "Json Web Token",
+      "description": "JWT is retrieved when the user logs in",
+      "in": "header"
+    }
+  },
   "definitions": {
     "ApiResponse": {
       "properties": {
@@ -142,6 +154,11 @@
         "summary": "Verify token of qrcode and return his information",
         "tags": ["QrCode"],
         "description": "",
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
         "parameters": [
           { "name": "token", "in": "body", "type": "string" }
         ],
@@ -166,6 +183,11 @@
         "summary": "Get all promotions",
         "tags": ["Promotions"],
         "description": "",
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Promotions found",
@@ -181,6 +203,11 @@
         "summary": "Get one promotion",
         "tags": ["Promotions"],
         "description": "",
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Promotion found",
@@ -190,6 +217,26 @@
           },
           "400": {
             "description": "Invalid request. Promotion id is not valid?"
+          }
+        }
+      }
+    },
+    "/me/promotions": {
+      "get": {
+        "summary": "Get all promotions of connected user",
+        "tags": ["Connected user"],
+        "description": "",
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of promotions retrieved when scan of qr code",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
+            }
           }
         }
       }
