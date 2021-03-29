@@ -36,8 +36,12 @@ export class QrcodesController {
                         let promotion_ids = userPromotionsToCreate.map(x => x.promotion_id); // Liste des ids des promotions à ajouter
                         return UserPromotion.findAll({ where: { promotion_id: promotion_ids, user_id: res.locals.connected.id } })
                             .then(userPromotions => { // On récupère les promotions qui existent déjà dans la relation UserPromotion
-                                let userPromotionsAlreadyCreated = userPromotions.map(x => x.promotion_id);
-                                return UserPromotion.bulkCreate(userPromotionsToCreate.filter(x => !userPromotionsAlreadyCreated.includes(x.promotion_id)))
+                                const userPromotionsAlreadyCreated = userPromotions.map(x => x.promotion_id);
+                                const userPromotionsNeedToCreate = userPromotionsToCreate.filter(x => !userPromotionsAlreadyCreated.includes(x.promotion_id));
+                                if (userPromotionsNeedToCreate.length === 0) {
+                                    return HttpResponse.success(res, qrcode);
+                                }
+                                return UserPromotion.bulkCreate(userPromotionsNeedToCreate)
                                     .then(createdPromotions => {
                                         return HttpResponse.success(res, qrcode);
                                     });
