@@ -44,9 +44,9 @@ export class ConnectedUserController {
         if (!Crypto.isUuid(id)) {
             return HttpResponse.error(res, "L'identifiant n'est pas valide", 400);
         }
-        return UserPromotion.destroy({ where: { id: req.params.id, user_id: res.locals.connected.id } })
-            .then(deleted => {
-                if (deleted) {
+        return UserPromotion.destroy({ where: { id: req.params.id, user_id: res.locals.connected.id, deletedAt: null } })
+            .then(userPromotion => {
+                if (userPromotion) {
                     return HttpResponse.success(res, null, 'Votre promotion a été retirée' ,200)
                 }
                 return HttpResponse.error(res, "Vous ne pouvez pas supprimer cette promotion", 403);

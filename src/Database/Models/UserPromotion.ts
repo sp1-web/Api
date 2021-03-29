@@ -1,5 +1,5 @@
 import {UUID} from "./Generic/UUID";
-import {BelongsTo, Column, DataType, ForeignKey, Table} from "sequelize-typescript";
+import {BelongsTo, Column, DataType, DeletedAt, ForeignKey, Table} from "sequelize-typescript";
 import {User} from "./User";
 import {Promotion} from "./Promotion";
 
@@ -22,4 +22,8 @@ export class UserPromotion extends UUID {
 
     @Column({ type: DataType.BOOLEAN, defaultValue: false })
     used: boolean;
+
+    @DeletedAt
+    deletedAt: Date;
+
 }
