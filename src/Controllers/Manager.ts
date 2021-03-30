@@ -3,6 +3,7 @@ import {AuthController} from "./AuthController";
 import {PromotionsController} from "./PromotionsController";
 import {QrcodesController} from "./QrcodesController";
 import {ConnectedUserController} from "./ConnectedUserController";
+import {UsersController} from "./UsersController";
 
 export class Manager {
 
@@ -18,6 +19,7 @@ export class Manager {
         new PromotionsController(app);
         new QrcodesController(app);
         new ConnectedUserController(app);
+        new UsersController(app);
     }
 
 }
