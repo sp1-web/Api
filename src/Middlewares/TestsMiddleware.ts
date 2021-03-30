@@ -7,7 +7,7 @@ export class TestsMiddleware {
 
     public static IsLoggedTests(req: Request, res: Response, next: NextFunction) {
         const unauthorized = (message) => HttpResponse.error(res, message, 401);
-        const tokenTest = req.headers["X-Tests-Token"];
+        const tokenTest = req.headers["x-tests-token"];
         if (!tokenTest)
             return unauthorized(`You're not authorized to execute this`);
         if (process.env.SECRET_TEST === tokenTest) {
