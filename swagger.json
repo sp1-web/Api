@@ -25,6 +25,10 @@
     {
       "name": "Connected user",
       "description": "Operations about connected user"
+    },
+    {
+      "name": "Articles",
+      "description": "Operations about articles"
     }
   ],
   "securityDefinitions": {
@@ -261,6 +265,32 @@
           },
           "403": {
             "description": "You're not authorized to delete this promotion"
+          }
+        }
+      }
+    },
+    "/articles": {
+      "get": {
+        "summary": "Get all articles",
+        "tags": ["Articles"],
+        "description": "",
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of articles",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
+            }
+          },
+          "403": {
+            "description": "You're not authorized to execute this route"
+          },
+          "401": {
+            "description": "You're not connected"
           }
         }
       }

@@ -36,4 +36,10 @@ export class AuthMiddleware {
         return next();
     }
 
+    public static IsAdmin(req: Request, res: Response, next: NextFunction) {
+        if (res.locals.connected.isAdmin)
+            return next();
+        return HttpResponse.error(res, "Vous n'avez pas le droit d'effectuer cette action", 403);
+    }
+
 }
