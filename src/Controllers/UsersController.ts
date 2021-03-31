@@ -15,7 +15,7 @@ export class UsersController {
         if (id && !Crypto.isUuid(id)) {
             return HttpResponse.error(res, 'L\'identifiant est invalide', 400);
         }
-        return User.destroy({ where: { id } })
+        return User.destroy({ where: { id }, cascade: true })
             .then(deleted => {
                 if (deleted) {
                     return HttpResponse.success(res, null, 'User deleted', 200);

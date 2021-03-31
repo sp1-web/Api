@@ -42,7 +42,7 @@ export class ArticlesController {
         const id = req.params.id;
         if (!id || !Crypto.isUuid(id))
             return HttpResponse.error(res, 'L\'identifiant de l\'article n\'est pas valide', 400);
-        return Article.destroy({ where: { id } })
+        return Article.destroy({ where: { id }, cascade: true })
             .then(deleted => {
                 if (deleted)
                     return HttpResponse.success(res, null, 'Article supprimé avec succès', 200);
