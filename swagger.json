@@ -207,6 +207,15 @@
         "summary": "Get one promotion",
         "tags": ["Promotions"],
         "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Unique identifier of promotion",
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
         "security": [
           {
             "JWT": []
@@ -251,6 +260,15 @@
         "security": [
           { "JWT": [] }
         ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Unique identifier of user promotion",
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
         "description": "",
         "tags": ["Connected user"],
         "responses": {
@@ -286,13 +304,76 @@
               "$ref": "#/definitions/ApiResponse"
             }
           },
+          "401": {
+            "description": "You're not connected"
+          },
           "403": {
-            "description": "You're not authorized to execute this route"
+            "description": "You need to be administrator to do this action"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create new article",
+        "tags": ["Articles"],
+        "description": "",
+        "parameters": [
+          { "name": "name", "in": "body", "type": "string" },
+          { "name": "description", "in": "body", "type": "string" },
+          { "name": "img", "in": "body", "type": "string" },
+          { "name": "price", "in": "body", "type": "number", "format": "double"
+          }
+        ],
+        "security": [
+          { "JWT": [] }
+        ],
+        "responses": {
+          "201": {
+            "description": "Article created"
+          },
+          "400": {
+            "description": "Missing params in body"
           },
           "401": {
             "description": "You're not connected"
+          },
+          "403": {
+            "description": "You need to be administrator to do this action"
           }
         }
+      }
+    },
+    "/articles/{id}": {
+      "delete": {
+        "responses": {
+          "200": {
+            "description": "Article deleted successfully"
+          },
+          "404": {
+            "description": "Article not found"
+          },
+          "400": {
+            "description": "Unique identifier not valid"
+          },
+          "401": {
+            "description": "You're not connected"
+          },
+          "403": {
+            "description": "You need to be administrator to do this action"
+          }
+        },
+        "description": "",
+        "tags": ["Articles"],
+        "summary": "Delete article by his id",
+        "security": [{ "JWT": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Unique identifier of promotion",
+            "type": "string",
+            "format": "uuid"
+          }
+        ]
       }
     }
   }
