@@ -3,11 +3,15 @@ import {HttpResponse} from "../Utils/HttpResponse";
 import {Qrcode} from "../Database/Models/Qrcode";
 import {AuthMiddleware} from "../Middlewares/AuthMiddleware";
 import {UserPromotion} from "../Database/Models/UserPromotion";
+import {Crypto} from "../Utils/Crypto";
 
 export class QrcodesController {
 
     constructor(app: Express) {
         app.post('/qrcodes/scan', AuthMiddleware.IsLogged, this.Scan);
+        app.post('/qrcodes', AuthMiddleware.IsLogged, AuthMiddleware.IsAdmin, this.Create);
+        app.get('/qrcodes', AuthMiddleware.IsLogged, AuthMiddleware.IsAdmin, this.GetAll);
+        app.delete('/qrcodes/:id', AuthMiddleware.IsLogged, AuthMiddleware.IsAdmin, this.Delete);
     }
 
     /**
@@ -57,4 +61,48 @@ export class QrcodesController {
             })
     }
 
+    /**
+     * POST /qrcodes
+     * Ajout d'un nouveau Qrcode
+     */
+    private Create(req: Request, res: Response) {
+        const body = req.body;
+        const params = ['name'];
+        if (!params.every(x => body.hasOwnProperty(x) && x !== null))
+            return HttpResponse.error(res, `Paramètres nécessaires: ${params}`, 400);
+        body.token = Crypto.generateToken();
+        return Qrcode.create(body)
+            .then(created => {
+                if (created)
+                    return HttpResponse.success(res, created, 'Qrcode ajouté', 201);
+                return HttpResponse.error(res);
+            })
+    }
+
+    /**
+     * GET /qrcodes
+     * Récupère tous les qrcodes
+     */
+    private GetAll(req: Request, res: Response) {
+        return Qrcode.findAll()
+            .then(qrcodes => {
+                return HttpResponse.success(res, qrcodes);
+            })
+    }
+
+    /**
+     * DELETE /qrcodes/:id
+     * Supprime un qrcode et ses liaisons
+     */
+    private Delete(req: Request, res: Response) {
+        const id = req.params.id;
+        if (!id || !Crypto.isUuid(id))
+            return HttpResponse.error(res, 'L\'identifiant n\'est pas valide', 400);
+        return Qrcode.destroy({ where: { id }, cascade: true })
+            .then(destroyed => {
+                if (destroyed)
+                    return HttpResponse.success(res, null, 'QrCode supprimé', 200);
+                return HttpResponse.error(res, 'Qrcode introuvable', 404);
+            })
+    }
 }
