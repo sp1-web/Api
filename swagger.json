@@ -165,10 +165,79 @@
         ],
         "responses": {
           "200": {
-            "description": "Promotions found",
-            "schema": {
-              "$ref": "#/definitions/ApiResponse"
-            }
+            "description": "List of all promotions"
+          },
+          "401": {
+            "description": "You're not connected"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create new promotion",
+        "tags": ["Promotions"],
+        "description": "",
+        "security": [{ "JWT": [] }],
+        "parameters": [
+          { "name": "qrcode_id", "description": "QrCode identifier",
+            "type": "string",
+            "format": "uuid",
+            "in": "body"
+          },
+          { "name": "article_id", "description": "Article identifier",
+            "type": "string",
+            "format": "uuid",
+            "in": "body"
+          },
+          {
+            "name": "name",
+            "description": "Name of promotion",
+            "type": "string",
+            "format": "uuid",
+            "in": "body"
+          },
+          {
+            "name": "code",
+            "description": "Promotion code",
+            "type": "string",
+            "format": "uuid",
+            "in": "body"
+          },
+          {
+            "name": "percentageReduction",
+            "description": "Reduction percentage",
+            "type": "number",
+            "format": "double",
+            "in": "body"
+          },
+          {
+            "name": "generic",
+            "description": "Set false if promotion can be used only one time by user",
+            "in": "body",
+            "type": "boolean"
+          },
+          {
+            "name": "expireAt",
+            "in": "body",
+            "description": "Expiration date of promotion",
+            "type": "string",
+            "format": "date"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Promotion added"
+          },
+          "400": {
+            "description": "Variable missing or mal formatted"
+          },
+          "404": {
+            "description": "Qrcode or Article not found"
+          },
+          "401": {
+            "description": "You're not connected"
+          },
+          "403": {
+            "description": "You need to be administrator to do this action"
           }
         }
       }
@@ -203,6 +272,38 @@
             "description": "Invalid request. Promotion id is not valid?"
           }
         }
+      },
+      "delete": {
+        "description": "",
+        "summary": "Delete promotion",
+        "responses": {
+          "200": {
+            "description": "Promotion deleted"
+          },
+          "400": {
+            "description": "Promotion identifier is not valid"
+          },
+          "404": {
+            "description": "Promotion not found"
+          },
+          "401": {
+            "description": "You're not connected"
+          },
+          "403": {
+            "description": "You need to be administrator to do this action"
+          }
+        },
+        "security": [{ "JWT": [] }],
+        "tags": ["Promotions"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "type": "string",
+            "format": "uuid",
+            "description": "Promotion unique identifier"
+          }
+        ]
       }
     },
     "/me/promotions": {
