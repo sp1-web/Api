@@ -16,4 +16,7 @@ export class User extends UUID {
     @Column(DataType.TEXT)
     token: string;
 
+    @Column
+    isAdmin: boolean;
+
 }
